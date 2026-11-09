@@ -14,7 +14,8 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard, models } from '@/routes';
+import { dashboard } from '@/routes';
+import { index as projectsPage } from '@/actions/App/Http/Controllers/ProjectController';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -24,11 +25,13 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
-        title: 'Models',
-        href: models(),
+        title: 'Projects',
+        href: projectsPage(),
         icon: Package,
     },
 ];
+
+const projectNavItems: NavItem[] = [];
 
 const footerNavItems: NavItem[] = [];
 </script>
@@ -48,7 +51,8 @@ const footerNavItems: NavItem[] = [];
         </SidebarHeader>
 
         <SidebarContent>
-            <NavMain :items="mainNavItems" />
+            <NavMain :items="mainNavItems" label="Platform" />
+            <NavMain v-if="projectNavItems.length > 0" :items="projectNavItems" label="Projects" />
         </SidebarContent>
 
         <SidebarFooter>
