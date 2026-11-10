@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -37,6 +38,10 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
+            'sidebarProjects' => fn () => Project::query()
+                ->select('id', 'name', 'slug')
+                ->limit(5)
+                ->get(),
             'name' => config('app.name'),
             'auth' => [
                 'user' => $request->user(),

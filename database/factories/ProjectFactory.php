@@ -18,8 +18,8 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
-            'slug' => "slug"
+            'name' => fake()->company(),
+            'slug' => strtoupper(fake()->lexify('?????'))
         ];
     }
 }

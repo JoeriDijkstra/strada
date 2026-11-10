@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Link } from '@inertiajs/vue3';
-import { BookOpen, FolderGit2, LayoutGrid, Package } from '@lucide/vue';
+import { Link, usePage } from '@inertiajs/vue3';
+import { Blocks, BookOpen, FolderGit2, LayoutGrid, Package } from '@lucide/vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
@@ -16,7 +16,12 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { index as projectsPage } from '@/actions/App/Http/Controllers/ProjectController';
-import type { NavItem } from '@/types';
+import type { NavItem, Project } from '@/types';
+import { computed } from 'vue';
+
+const page = usePage<{
+    projects: Project[];
+}>();
 
 const mainNavItems: NavItem[] = [
     {
@@ -31,7 +36,14 @@ const mainNavItems: NavItem[] = [
     },
 ];
 
-const projectNavItems: NavItem[] = [];
+const projectNavItems = computed<NavItem[]>(() =>
+    page.props.sidebarProjects.map((project: Project) => {
+        return {
+            title: project.name,
+            href: project.slug,
+            icon: Blocks
+        }
+    }));
 
 const footerNavItems: NavItem[] = [];
 </script>
